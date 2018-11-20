@@ -1,0 +1,36 @@
+entity UserExtra {
+	photo String,
+	phone String,
+    description String,
+    gender Gender
+}
+
+entity Socialnetwork {
+	title String,
+    url String,
+    status Boolean
+}
+
+entity Link {
+	title String,
+    description String,
+    url String
+}
+
+relationship ManyToOne {
+	Link{socialnetwork(title)} to Socialnetwork{link(title)}
+}
+
+relationship ManyToOne {
+    Link{user(login)} to User
+}
+relationship OneToOne {
+	UserExtra{user(login)} to User
+}
+
+enum Gender {
+	FEMALE, MALE
+}
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
