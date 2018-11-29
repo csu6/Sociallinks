@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="socialnetwork">
+            <h2><span jhiTranslate="sociallinksApp.socialnetwork.detail.title">Socialnetwork</span> {{socialnetwork.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sociallinksApp.socialnetwork.title">Title</span></dt>
+                <dd>
+                    <span>{{socialnetwork.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="sociallinksApp.socialnetwork.url">Url</span></dt>
+                <dd>
+                    <span>{{socialnetwork.url}}</span>
+                </dd>
+                <dt><span jhiTranslate="sociallinksApp.socialnetwork.status">Status</span></dt>
+                <dd>
+                    <span>{{socialnetwork.status}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/socialnetwork', socialnetwork.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

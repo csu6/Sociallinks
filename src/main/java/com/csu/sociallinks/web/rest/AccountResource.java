@@ -4,10 +4,13 @@ import com.codahale.metrics.annotation.Timed;
 
 import com.csu.sociallinks.domain.PersistentToken;
 import com.csu.sociallinks.repository.PersistentTokenRepository;
+import com.csu.sociallinks.repository.UserExtraRepository;
 import com.csu.sociallinks.domain.User;
+import com.csu.sociallinks.domain.UserExtra;
 import com.csu.sociallinks.repository.UserRepository;
 import com.csu.sociallinks.security.SecurityUtils;
 import com.csu.sociallinks.service.MailService;
+import com.csu.sociallinks.service.UserExtraService;
 import com.csu.sociallinks.service.UserService;
 import com.csu.sociallinks.service.dto.PasswordChangeDTO;
 import com.csu.sociallinks.service.dto.UserDTO;
@@ -38,19 +41,30 @@ public class AccountResource {
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
     private final UserRepository userRepository;
+    
+    private final UserExtraRepository userExtraRepository;
 
     private final UserService userService;
+
+    private final UserExtraService userExtraService;
 
     private final MailService mailService;
 
     private final PersistentTokenRepository persistentTokenRepository;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, PersistentTokenRepository persistentTokenRepository) {
+    public AccountResource(
+    		UserRepository userRepository, UserService userService, 
+    		MailService mailService, PersistentTokenRepository persistentTokenRepository,
+    		UserExtraService userExtraService,
+    		UserExtraRepository userExtraRepository
+    		) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
+        this.userExtraService = userExtraService;
+        this.userExtraRepository = userExtraRepository;
     }
 
     /**
@@ -109,9 +123,12 @@ public class AccountResource {
     @GetMapping("/account")
     @Timed
     public UserDTO getAccount() {
-        return userService.getUserWithAuthorities()
-            .map(UserDTO::new)
-            .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
+    	Optional<User> user = userService.getUserWithAuthorities();
+    	UserDTO userDTO = user.map(UserDTO::new)
+        .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
+    	UserExtra userExtra = userExtraRepository.findOneByUser(user);
+    	userDTO.setDescription(userExtra.getDescription());
+        return userDTO;
     }
 
     /**
@@ -124,6 +141,7 @@ public class AccountResource {
     @PostMapping("/account")
     @Timed
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
+    	String ttoto = userDTO.getDescription();
         final String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new InternalServerErrorException("Current user login not found"));
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
@@ -133,8 +151,13 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new InternalServerErrorException("User could not be found");
         }
+ 
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
             userDTO.getLangKey(), userDTO.getImageUrl());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(" userDTO.getDescription() : "+ userDTO.getDescription());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        userExtraService.updateUserExtra(user, userDTO.getDescription());
     }
 
     /**

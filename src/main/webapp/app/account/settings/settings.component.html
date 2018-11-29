@@ -49,6 +49,7 @@
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" for="email" jhiTranslate="global.form.email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
@@ -72,6 +73,14 @@
                         </small>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="description" jhiTranslate="settings.form.description">Description</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="{{'settings.form.description.placeholder' | translate}}"
+                           [(ngModel)]="settingsAccount.description" minlength=1 maxlength=500 #descriptionInput="ngModel">
+                    </textarea>
+                </div>
+
                 <div class="form-group" *ngIf="languages && languages.length > 0">
                     <label for="langKey" jhiTranslate="settings.form.language">Language</label>
                     <select class="form-control" id="langKey" name="langKey" [(ngModel)]="settingsAccount.langKey">

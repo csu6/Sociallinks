@@ -7,6 +7,7 @@ import com.csu.sociallinks.domain.PersistentToken;
 import com.csu.sociallinks.domain.User;
 import com.csu.sociallinks.repository.AuthorityRepository;
 import com.csu.sociallinks.repository.PersistentTokenRepository;
+import com.csu.sociallinks.repository.UserExtraRepository;
 import com.csu.sociallinks.repository.UserRepository;
 import com.csu.sociallinks.security.AuthoritiesConstants;
 import com.csu.sociallinks.service.MailService;
@@ -59,6 +60,9 @@ public class AccountResourceIntTest {
     private UserRepository userRepository;
 
     @Autowired
+    private UserExtraRepository userExtraRepository;
+
+    @Autowired
     private AuthorityRepository authorityRepository;
 
     @Autowired
@@ -91,10 +95,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository);
+            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository, null, userExtraRepository);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository);
+            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository, null, userExtraRepository);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)

@@ -1,0 +1,49 @@
+<div class="container">
+
+  <div class="row justify-content-md-center" style="border:1px solid red,"> 
+    <div class="col-md-5" >
+
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 shadow-sm">
+
+              <div class="card-header">
+                  <div class="profile-userpic">
+                    <img  src="{{userExtras?.photo}}" class="img-responsive" alt="">
+                  </div>
+              </div>
+
+              <div class="card-body">
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                     <a href="#">{{currentAccount?.firstName | titlecase}} {{currentAccount?.lastName | titlecase}}</a>
+                    </div>
+                    <div class="profile-usertitle-job">
+                      Developer
+                    </div>
+                </div>
+
+                <span>{{userExtras?.description}}</span>
+                  <!-- END SIDEBAR USER TITLE -->
+                <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+                <div *ngIf="links">
+                  <div class="btn-group-vertical">
+                    <a *ngFor="let link of links ;trackBy: trackId" href="{{link.socialnetwork.url}}/{{link.url}}" role="button" class="btn btn-outline text-left">
+                      <i class="fa fa-home"></i> 
+                      {{link.socialnetwork.url}}/{{link.url}}
+                      <span class = "badge pull-right">42</span>  
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+    </div>
+        
+  </div>
+  
+
+
+
+</div>

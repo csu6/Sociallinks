@@ -30,6 +30,11 @@ public class UserDTO {
 
     @Size(max = 50)
     private String lastName;
+    
+    @Size(max = 254)
+    private String description;
+    
+    private String phone;
 
     @Email
     @Size(min = 5, max = 254)
@@ -115,7 +120,23 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getImageUrl() {
+    public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getImageUrl() {
         return imageUrl;
     }
 

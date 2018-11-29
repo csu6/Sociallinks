@@ -1,0 +1,34 @@
+// JDL definition for application 'sociallinks' generated with command 'jhipster export-jdl'
+
+entity UserExtra {
+  photo String,
+  phone String,
+  description String,
+  gender Gender
+}
+entity Socialnetwork {
+  title String,
+  url String,
+  status Boolean
+}
+entity Link {
+  title String,
+  description String,
+  url String
+}
+
+enum Gender {
+  FEMALE,
+  MALE
+}
+
+relationship OneToOne {
+  UserExtra{user(login)} to User
+}
+relationship OneToMany {
+  Socialnetwork{link} to Link{socialnetwork(title)}
+}
+relationship ManyToOne {
+  Link{user(login)} to User
+}
+

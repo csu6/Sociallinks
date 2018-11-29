@@ -1,0 +1,68 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="sociallinksApp.link.home.title">Links</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-link" [routerLink]="['/link/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="sociallinksApp.link.home.createLabel">
+            Create new Link
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="links">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="sociallinksApp.link.title">Title</span></th>
+            <th><span jhiTranslate="sociallinksApp.link.description">Description</span></th>
+            <th><span jhiTranslate="sociallinksApp.link.url">Url</span></th>
+            <th><span jhiTranslate="sociallinksApp.link.socialnetwork">Socialnetwork</span></th>
+            <th><span jhiTranslate="sociallinksApp.link.user">User</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let link of links ;trackBy: trackId">
+                <td><a [routerLink]="['/link', link.id, 'view' ]">{{link.id}}</a></td>
+                <td>{{link.title}}</td>
+                <td>{{link.description}}</td>
+                <td>{{link.url}}</td>
+                <td>
+                    <div *ngIf="link.socialnetwork">
+                        <a [routerLink]="['../socialnetwork', link.socialnetwork?.id, 'view' ]" >{{link.socialnetwork?.title}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{link.user?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/link', link.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/link', link.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'link/'+ link.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 entity UserExtra {
-	photo String,
+	photo ImageBlob,
 	phone String,
     description String,
     gender Gender

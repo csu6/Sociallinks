@@ -1,0 +1,9 @@
+{
+    "sociallinksApp": {
+        "Gender": {
+            "null": "",
+            "FEMALE": "FEMALE",
+            "MALE": "MALE"
+        }
+    }
+}

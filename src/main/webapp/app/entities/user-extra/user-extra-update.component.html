@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-user-extra-heading" jhiTranslate="sociallinksApp.userExtra.home.createOrEditLabel">Create or edit a User Extra</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!userExtra.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="userExtra.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sociallinksApp.userExtra.photo" for="field_photo">Photo</label>
+                    <div>
+                        <img [src]="'data:' + userExtra.photoContentType + ';base64,' + userExtra.photo" style="max-height: 100px;" *ngIf="userExtra.photo" alt="userExtra image"/>
+                        <div *ngIf="userExtra.photo" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{userExtra.photoContentType}}, {{byteSize(userExtra.photo)}}</span>
+                            <button type="button" (click)="clearInputImage('photo', 'photoContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_photo" (change)="setFileData($event, userExtra, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="photo" id="field_photo"
+                        [(ngModel)]="userExtra.photo" />
+                    <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                        [(ngModel)]="userExtra.photoContentType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sociallinksApp.userExtra.phone" for="field_phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="field_phone"
+                        [(ngModel)]="userExtra.phone" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sociallinksApp.userExtra.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="userExtra.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sociallinksApp.userExtra.gender" for="field_gender">Gender</label>
+                    <select class="form-control" name="gender" [(ngModel)]="userExtra.gender" id="field_gender" >
+                        <option value="FEMALE">{{'sociallinksApp.Gender.FEMALE' | translate}}</option>
+                        <option value="MALE">{{'sociallinksApp.Gender.MALE' | translate}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sociallinksApp.userExtra.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" [(ngModel)]="userExtra.user" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id === userExtra.user?.id ? userExtra.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

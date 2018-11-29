@@ -1,0 +1,24 @@
+{
+    "sociallinksApp": {
+        "socialnetwork": {
+            "home": {
+                "title": "Socialnetworks",
+                "createLabel": "Créer un nouveau Socialnetwork",
+                "createOrEditLabel": "Créer ou éditer un Socialnetwork"
+            },
+            "created": "Un nouveau Socialnetwork a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Socialnetwork avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Socialnetwork avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Socialnetwork {{ id }} ?"
+            },
+            "detail": {
+                "title": "Socialnetwork"
+            },
+            "title": "Title",
+            "url": "Url",
+            "status": "Status",
+            "link": "Link"
+        }
+    }
+}

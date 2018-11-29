@@ -14,6 +14,7 @@ import {
     SettingsComponent,
     accountState
 } from './';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
     imports: [SociallinksSharedModule, RouterModule.forChild(accountState)],
@@ -25,7 +26,8 @@ import {
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
         SessionsComponent,
-        SettingsComponent
+        SettingsComponent,
+        ProfileComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

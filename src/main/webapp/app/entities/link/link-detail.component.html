@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="link">
+            <h2><span jhiTranslate="sociallinksApp.link.detail.title">Link</span> {{link.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sociallinksApp.link.title">Title</span></dt>
+                <dd>
+                    <span>{{link.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="sociallinksApp.link.description">Description</span></dt>
+                <dd>
+                    <span>{{link.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="sociallinksApp.link.url">Url</span></dt>
+                <dd>
+                    <span>{{link.url}}</span>
+                </dd>
+                <dt><span jhiTranslate="sociallinksApp.link.socialnetwork">Socialnetwork</span></dt>
+                <dd>
+                    <div *ngIf="link.socialnetwork">
+                        <a [routerLink]="['/socialnetwork', link.socialnetwork?.id, 'view']">{{link.socialnetwork?.title}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="sociallinksApp.link.user">User</span></dt>
+                <dd>
+                    {{link.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/link', link.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
